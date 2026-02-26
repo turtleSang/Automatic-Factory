@@ -45,7 +45,10 @@ public class SpawnManager : MonoBehaviour
     {
         GameObject product = getProduct();
         ProductController productController = product.GetComponent<ProductController>();
+        //reset Product
         productController.SetStage(ProductState.rawMaterial);
+        productController.direction = Vector3.zero;
+        productController.speed = 0;
         product.transform.position = spawnPoint.transform.position;
         product.transform.rotation = spawnPoint.transform.rotation;
         product.SetActive(true);
