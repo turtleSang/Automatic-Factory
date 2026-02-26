@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class PressureContoller : MonoBehaviour
+public class PressureController : MonoBehaviour
 {
     private Animator anim;
     public float deceleration = 5f;
