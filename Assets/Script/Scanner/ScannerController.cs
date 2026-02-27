@@ -40,7 +40,11 @@ public class ScannerController : MonoBehaviour
         {
             SetScreen(ScreenType.SCAN);
             scanLight.SetActive(true);
-            StartCoroutine(DelayScan(product.GetComponent<ProductController>()));
+            ProductController productController = product.GetComponent<ProductController>();
+            StartCoroutine(DelayScan(productController));
+            product.gameObject.SetActive(false);
+            productController.direction = Vector3.zero;
+            productController.speed = 0;
 
         }
     }
