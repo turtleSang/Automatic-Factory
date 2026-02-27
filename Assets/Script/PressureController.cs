@@ -9,13 +9,19 @@ public class PressureController : MonoBehaviour
     [SerializeField]
     private GameObject targetAfterStamp;
 
+    [SerializeField]
+    private ParticleSystem smokeParticle;
+
     private float speed = 1f;
+
+    private bool isProcessing = false;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         anim = GetComponent<Animator>();
+        smokeParticle.Stop();
     }
 
     // Update is called once per frame
@@ -28,8 +34,8 @@ public class PressureController : MonoBehaviour
     {
         if (other.CompareTag("Product"))
         {
-
             anim.SetTrigger("Press");
+            smokeParticle.Play();
         }
     }
 
@@ -42,7 +48,11 @@ public class PressureController : MonoBehaviour
             if (productController.currentState.Equals(ProductState.rawMaterial))
             {
                 productController.speed = Mathf.MoveTowards(productController.speed, 0f, deceleration * Time.deltaTime);
-                StartCoroutine(DelayTransform(productController));
+                if (!isProcessing)
+                {
+                    isProcessing = true;
+                    StartCoroutine(DelayTransform(productController));
+                }
             }
             else
             {
@@ -57,8 +67,7 @@ public class PressureController : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         productController.SetStage(ProductState.afterStamping);
+        isProcessing = false;
     }
-
-
 
 }

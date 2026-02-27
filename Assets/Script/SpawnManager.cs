@@ -80,8 +80,10 @@ public class SpawnManager : MonoBehaviour
                 return product;
             }
         }
+        Debug.Log(123);
         GameObject newProduct = Instantiate(productPrefabs);
         newProduct.SetActive(false);
+        poolProduct.Add(newProduct);
         return newProduct;
     }
 }
