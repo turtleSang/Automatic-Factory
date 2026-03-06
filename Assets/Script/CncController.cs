@@ -20,8 +20,7 @@ public class CncController : MonoBehaviour
     [SerializeField]
     private GameObject lightVfx;
 
-    [Range(0f, 1f)]
-    public float failRate = 0.3f;
+    private float failRate = 0;
 
     private bool isProcessing = false;
 
@@ -89,4 +88,10 @@ public class CncController : MonoBehaviour
 
     }
 
+
+    public void SetFailRate(float newFailRate)
+    {
+
+        failRate = newFailRate;
+    }
 }

@@ -41,7 +41,7 @@ public class ScannerController : MonoBehaviour
             SetScreen(ScreenType.SCAN);
             scanLight.SetActive(true);
             ProductController productController = product.GetComponent<ProductController>();
-            StartCoroutine(DelayScan(productController));
+            StartCoroutine(DelayScan(productController.currentState));
             product.gameObject.SetActive(false);
             productController.direction = Vector3.zero;
             productController.speed = 0;
@@ -49,10 +49,11 @@ public class ScannerController : MonoBehaviour
         }
     }
 
-    IEnumerator DelayScan(ProductController productController)
+    IEnumerator DelayScan(ProductState productState)
     {
+
         yield return new WaitForSeconds(delayScan);
-        if (productController.currentState.Equals(ProductState.finalProduct))
+        if (productState == ProductState.finalProduct)
         {
             SetScreen(ScreenType.CHECKED);
         }
@@ -72,16 +73,16 @@ public class ScannerController : MonoBehaviour
 
     void SetScreen(ScreenType type)
     {
-        currentScreenType = type;
+
         waitingUI.SetActive(false);
         scanningUI.SetActive(false);
         failUI.SetActive(false);
         checkedUI.SetActive(false);
+        currentScreenType = type;
         switch (currentScreenType)
         {
             case ScreenType.WAIT:
                 waitingUI.SetActive(true);
-
                 break;
             case ScreenType.SCAN:
                 scanningUI.SetActive(true);
@@ -89,8 +90,11 @@ public class ScannerController : MonoBehaviour
             case ScreenType.CHECKED:
                 checkedUI.SetActive(true);
                 break;
-            default:
+            case ScreenType.FAIL:
                 failUI.SetActive(true);
+                break;
+            default:
+                Debug.Log(currentScreenType);
                 break;
         }
     }

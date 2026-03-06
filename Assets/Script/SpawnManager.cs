@@ -35,6 +35,9 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private Button stopButton;
 
+    [SerializeField]
+    AudioSource conveyorAudio;
+
 
     //State
     private bool isSpawn = true;
@@ -59,7 +62,6 @@ public class SpawnManager : MonoBehaviour
             poolProduct.Add(product);
         }
     }
-
 
     IEnumerator DelaySpawn()
     {
@@ -94,6 +96,7 @@ public class SpawnManager : MonoBehaviour
         belt.SetFloat("_Speed", conveyorSpeed);
         beltReverse.SetFloat("_Speed", -conveyorSpeed);
         sliderDelayTime.interactable = true;
+        conveyorAudio.Play();
     }
 
     public void StopSpawning()
@@ -109,6 +112,7 @@ public class SpawnManager : MonoBehaviour
             belt.SetFloat("_Speed", 0);
             beltReverse.SetFloat("_Speed", 0);
         }
+        conveyorAudio.Stop();
     }
 
     public GameObject getProduct()
